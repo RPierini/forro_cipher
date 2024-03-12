@@ -26,8 +26,13 @@ int main(int argc, char *argv[])
     // carregando chave, iv e rodando o algoritmo
     forro_keysetup(&input, key);
     forro_ivsetup(&input, iv);
+
+    printf("Cifra da Mensagem\n");
+    // Rodando a cifra da mensagem informada
     forro_encrypt_bytes(&input, mensagem, cifrado, number_of_bytes);
-    printf("\n");
+
+    printf("Rodando a cifra com zeros\n");
+    // Cifra uma sequência de zeros como mensagem
     forro_keystream_bytes(&input, output_forro, number_of_bytes);
 
     // imprimindo mensagem

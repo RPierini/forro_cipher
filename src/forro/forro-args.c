@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     // criando contexto e saida
     stream_ctx input;
-    uint64_t number_of_bytes = 128;
+    uint64_t number_of_bytes = 64;
     uint8_t *output_forro = (uint8_t *)malloc(number_of_bytes);
     uint8_t *mensagem = (uint8_t *)malloc(number_of_bytes);
     uint8_t *cifrado = (uint8_t *)malloc(number_of_bytes);
@@ -21,23 +21,25 @@ int main(int argc, char *argv[])
     strncpy(iv, argv[2], 8);
 
     // capturando mensagem a ser cifrada
-    strncpy(mensagem, argv[3], 128);
+    strncpy(mensagem, argv[3], number_of_bytes);
 
     // carregando chave, iv e rodando o algoritmo
+    printf("rodando Key Setup\n");
     forro_keysetup(&input, key);
+    printf("rodando IV Setup\n");
     forro_ivsetup(&input, iv);
 
-    printf("Cifra da Mensagem\n");
     // Rodando a cifra da mensagem informada
+    printf("Cifra da Mensagem\n");
     forro_encrypt_bytes(&input, mensagem, cifrado, number_of_bytes);
 
-    printf("Rodando a cifra com zeros\n");
     // Cifra uma sequência de zeros como mensagem
-    forro_keystream_bytes(&input, output_forro, number_of_bytes);
+    // printf("Rodando a cifra com zeros\n");
+    // forro_keystream_bytes(&input, output_forro, number_of_bytes);
 
     // imprimindo mensagem
     printf("Mensagem:\n");
-    for (int i = 0; i < 128; i++)
+    for (int i = 0; i < number_of_bytes; i++)
     {
         printf("%02x", mensagem[i]);
         if (i % 16 == 15)
@@ -61,11 +63,14 @@ int main(int argc, char *argv[])
             printf("\n");
     }
 
+    // dividir o resultado sempre em 8 linhas de x/8 bytes
+    int div_bloco = number_of_bytes/8;
+
     // imprimindo resultado em bloco e depois em texto corrido
-    printf("\nResultado:\n");
+    printf("\nResultado do estado:\n");
     for (int i = 0; i < 8; i++) {
-        for (int k = 0; k < 16; k++) {
-            printf("%02x", output_forro[16 * i + k]);
+        for (int k = 0; k < div_bloco; k++) {
+            printf("%02x", output_forro[div_bloco * i + k]);
         }
         printf("\n");
     }
@@ -73,16 +78,16 @@ int main(int argc, char *argv[])
     printf("\n");
 
     for (int i = 0; i < 8; i++) {
-        for (int k = 0; k < 16; k++) {
-            printf("%02x", output_forro[16 * i + k]);
+        for (int k = 0; k < div_bloco; k++) {
+            printf("%02x", output_forro[div_bloco * i + k]);
         }
     }
     printf("\n");
 
     printf("\nCifrado:\n");
     for (int i = 0; i < 8; i++) {
-        for (int k = 0; k < 16; k++) {
-            printf("%02x", cifrado[16 * i + k]);
+        for (int k = 0; k < div_bloco; k++) {
+            printf("%02x", cifrado[div_bloco * i + k]);
         }
         printf("\n");
     }
@@ -90,8 +95,8 @@ int main(int argc, char *argv[])
     printf("\n");
 
     for (int i = 0; i < 8; i++) {
-        for (int k = 0; k < 16; k++) {
-            printf("%02x", cifrado[16 * i + k]);
+        for (int k = 0; k < div_bloco; k++) {
+            printf("%02x", cifrado[div_bloco * i + k]);
         }
     }
     printf("\n");

@@ -8,6 +8,15 @@
     a += b, e ^= a, d += e, d = ROTL(d, 27), \
     c += d, b ^= c, a += b, a = ROTL(a, 8))
 
+void print_state(uint32_t vector[16]){
+    for(int s = 0; s <= 15; ) {
+        for(int t = 0; t <= 3; t++)
+            printf("State[%d]: %08x\t", s+t, vector[s + t]);
+        s+=4;
+        printf("\n");
+    }
+}
+
 inline void forro(uint8_t out[64], const uint32_t init[16])
 {
 
@@ -20,15 +29,41 @@ inline void forro(uint8_t out[64], const uint32_t init[16])
 
     for (i = 0; i < rounds; i++)
     {
-        printf("Round: %d\n", i);
+        int qr=0;
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[0], state_vector[4], state_vector[8], state_vector[12], state_vector[3]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[1], state_vector[5], state_vector[9], state_vector[13], state_vector[0]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[2], state_vector[6], state_vector[10], state_vector[14], state_vector[1]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[3], state_vector[7], state_vector[11], state_vector[15], state_vector[2]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[0], state_vector[5], state_vector[10], state_vector[15], state_vector[3]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[1], state_vector[6], state_vector[11], state_vector[12], state_vector[0]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[2], state_vector[7], state_vector[8], state_vector[13], state_vector[1]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
+        qr++;
         Q(state_vector[3], state_vector[4], state_vector[9], state_vector[14], state_vector[2]);
+        printf("##Round: %d-%d##\n", i, qr);
+        print_state(state_vector);
     }
 
     for (i = 0; i < 16; i++)
@@ -39,6 +74,10 @@ inline void forro(uint8_t out[64], const uint32_t init[16])
     {
         U32TO8_LITTLE(out + 4 * i, state_vector[i]);
     }
+
+    printf("----RESULTADO----\n");
+    print_state(state_vector);
+    printf("\n\n");
 
     return;
 }

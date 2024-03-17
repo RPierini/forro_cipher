@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     // criando contexto e saida
     stream_ctx input;
-    uint64_t number_of_bytes = 32;
+    uint64_t number_of_bytes = 64;
     uint8_t *output_forro = (uint8_t *)malloc(number_of_bytes);
     uint8_t *mensagem = (uint8_t *)malloc(number_of_bytes);
     uint8_t *cifrado = (uint8_t *)malloc(number_of_bytes);

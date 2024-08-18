@@ -114,6 +114,21 @@ void forro_ivsetup(stream_ctx *x, uint8_t *iv)
     x->state[13] = U8TO32_LITTLE(iv + 4);
 }
 
+void forro_versetup(stream_ctx *x, uint8_t *configuracao_rodada, uint8_t *configuracao_dispositivo)
+{
+    // Definindo estado fixo para outros valores alem da chave
+    // C0, C1, C2, C3
+    x->state[4] = U8TO32_LITTLE(configuracao_rodada + 0);
+    x->state[5] = U8TO32_LITTLE(configuracao_rodada + 4);
+    x->state[6] = U8TO32_LITTLE(configuracao_dispositivo + 0);
+    x->state[7] = U8TO32_LITTLE(configuracao_dispositivo + 4);
+    // C4, C5, C6, C7
+    x->state[12] = U8TO32_LITTLE(configuracao_rodada + 8);
+    x->state[13] = U8TO32_LITTLE(configuracao_rodada + 12);
+    x->state[14] = U8TO32_LITTLE(configuracao_dispositivo + 8);
+    x->state[15] = U8TO32_LITTLE(configuracao_dispositivo + 12);
+}
+
 inline void forro_encrypt_bytes(stream_ctx *x, const uint8_t *m, uint8_t *c, uint32_t bytes)
 {
     uint8_t output[64];

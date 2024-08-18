@@ -18,6 +18,7 @@ void forro(uint8_t out[64], const uint32_t init[16]);
 void forro_init();
 void forro_keysetup(stream_ctx *x, uint8_t *key);
 void forro_ivsetup(stream_ctx *x, uint8_t *iv);
+void forro_versetup(stream_ctx *x, uint8_t *configuracao_rodada, uint8_t *configuracao_dispositivo);
 void forro_encrypt_bytes(stream_ctx *x, const uint8_t *m, uint8_t *c, uint32_t bytes);
 void forro_decrypt_bytes(stream_ctx *x, const uint8_t *c, uint8_t *m, uint32_t bytes);
 void forro_keystream_bytes(stream_ctx *x, uint8_t *stream, uint32_t bytes);

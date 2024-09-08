@@ -32,7 +32,6 @@ ref: $(BUILD_DIR)/xote_ref.o $(BUILD_DIR)/forro_ref.o
 ref-args: $(BUILD_DIR)/forro_debug.o $(BUILD_DIR)/forro-args
 ref-args-dra: $(BUILD_DIR)/forro_debug.o $(BUILD_DIR)/forro-args-dra
 
-
 $(BUILD_DIR)/xote_ref.o:
 	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $(XOTE_REF_SRC) -o $@

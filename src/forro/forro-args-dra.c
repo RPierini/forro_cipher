@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "src/forro/ref/forro-debug.h"
+// #include "src/forro/ref/forro-debug.h"
+#include "src/forro/ref/forro.h"
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     strncpy(configuracao, argv[5], 32);
 
     // carregando chave, iv e rodando o algoritmo
-    printf("rodando Key Setup\n");
+    // printf("rodando Key Setup\n");
     forro_keysetup(&input, key);
     // printf("rodando IV Setup\n");
     // forro_ivsetup(&input, iv);
@@ -61,11 +62,11 @@ int main(int argc, char *argv[])
         configuracao_dispositivo[i+8] = id_dispositivo[i+8] ^ configuracao[i+24];
     }
 
-    printf("rodando Verificador Setup\n");
+    // printf("rodando Verificador Setup\n");
     forro_versetup(&input, configuracao_rodada, configuracao_dispositivo);
 
     // Rodando a cifra da mensagem informada
-    printf("Cifra da Mensagem\n");
+    // printf("Cifra da Mensagem\n");
     forro_encrypt_bytes(&input, mensagem, cifrado, number_of_bytes);
 
     // Cifra uma sequência de zeros como mensagem
@@ -73,47 +74,47 @@ int main(int argc, char *argv[])
     // forro_keystream_bytes(&input, output_forro, number_of_bytes);
 
     // imprimindo mensagem
-    printf("Mensagem:\n");
+/*     printf("Mensagem:\n");
     for (int i = 0; i < number_of_bytes; i++)
     {
         printf("%02x", mensagem[i]);
         if (i % 16 == 15)
             printf("\n");
     }
-    printf("\n");
+    printf("\n"); */
 
     // imprimindo configuracao
-    printf("Configuracao:\n");
+/*     printf("Configuracao:\n");
     for (int i = 0; i < 32; i++)
     {
         printf("%02x", configuracao[i]);
         if (i % 16 == 15)
             printf("\n");
     }
-    printf("\n");
+    printf("\n"); */
 
     // imprimindo id_dispositivo
-    printf("id_dispositivo:\n");
+/*     printf("id_dispositivo:\n");
     for (int i = 0; i < 16; i++)
     {
         printf("%02x", id_dispositivo[i]);
         if (i % 16 == 15)
             printf("\n");
     }
-    printf("\n");
+    printf("\n"); */
 
     // imprimindo id_rodada
-    printf("id_rodada:\n");
+/*     printf("id_rodada:\n");
     for (int i = 0; i < 8; i++)
     {
         printf("%02x", id_rodada[i]);
         if (i % 16 == 15)
             printf("\n");
     }
-    printf("\n");
+    printf("\n"); */
 
     // imprimindo configuracao_dispositivo e configuracao_rodada
-    printf("\nconfiguracao_dispositivo:\n");
+/*     printf("\nconfiguracao_dispositivo:\n");
     for (int i = 0; i < 16; i++)
     {
         printf("%02x", configuracao_dispositivo[i]);
@@ -128,10 +129,10 @@ int main(int argc, char *argv[])
         if (i % 16 == 15)
             printf("\n");
     }
-    printf("\n");
+    printf("\n"); */
 
     // imprimindo detalhes da chave e do Nonce
-    printf("KEY:\n");
+/*     printf("KEY:\n");
     for (int i = 0; i < 32; i++)
     {
         printf("%02x", key[i]);
@@ -144,13 +145,13 @@ int main(int argc, char *argv[])
         printf("%02x", nonce[i]);
         if (i % 8 == 7)
             printf("\n");
-    }
+    } */
 
-    // dividir o resultado sempre em 8 linhas de x/8 bytes
+     // dividir o resultado sempre em 8 linhas de x/8 bytes
     int div_bloco = number_of_bytes/8;
 
     // imprimindo resultado em bloco e depois em texto corrido
-    printf("\nResultado do estado:\n");
+/*    printf("\nResultado do estado:\n");
     for (int i = 0; i < 8; i++) {
         for (int k = 0; k < div_bloco; k++) {
             printf("%02x", output_forro[div_bloco * i + k]);
@@ -158,9 +159,9 @@ int main(int argc, char *argv[])
         printf("\n");
     }
 
-    printf("\n");
+    printf("\n"); */
 
-    for (int i = 0; i < 8; i++) {
+/*     for (int i = 0; i < 8; i++) {
         for (int k = 0; k < div_bloco; k++) {
             printf("%02x", output_forro[div_bloco * i + k]);
         }
@@ -175,14 +176,14 @@ int main(int argc, char *argv[])
         printf("\n");
     }
 
-    printf("\n");
+    printf("\n"); */
 
     for (int i = 0; i < 8; i++) {
         for (int k = 0; k < div_bloco; k++) {
             printf("%02x", cifrado[div_bloco * i + k]);
         }
     }
-    printf("\n");
+    // printf("\n");
 
     return 0;
 }
